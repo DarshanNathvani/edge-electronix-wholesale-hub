@@ -1,10 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Phone, Mail, MapPin, Cpu, Zap, Settings, Wifi } from "lucide-react";
+import { ArrowRight, Phone, Mail, MapPin, Cpu, Zap, Settings, Wifi, Wrench, Battery, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import FloatingActionButtons from "@/components/FloatingActionButtons";
 
 const Index = () => {
   const featuredCategories = [
@@ -34,10 +35,64 @@ const Index = () => {
     }
   ];
 
+  const topCategories = [
+    {
+      title: "Sensors",
+      icon: <Settings className="w-12 h-12" />,
+      gradient: "from-blue-500 to-cyan-500"
+    },
+    {
+      title: "Microcontrollers",
+      icon: <Cpu className="w-12 h-12" />,
+      gradient: "from-green-500 to-emerald-500"
+    },
+    {
+      title: "Modules",
+      description: "Wi-Fi, GSM, LoRa",
+      icon: <Wifi className="w-12 h-12" />,
+      gradient: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "Drone Parts",
+      icon: <Zap className="w-12 h-12" />,
+      gradient: "from-red-500 to-orange-500"
+    },
+    {
+      title: "Power Supplies",
+      icon: <Battery className="w-12 h-12" />,
+      gradient: "from-yellow-500 to-orange-500"
+    },
+    {
+      title: "Tools & Accessories",
+      icon: <Wrench className="w-12 h-12" />,
+      gradient: "from-gray-500 to-slate-500"
+    }
+  ];
+
+  const testimonials = [
+    {
+      text: "Best prices in Surat and fast delivery. Perfect for our college lab!",
+      author: "Mr. Patel, SVIT",
+      rating: 5
+    },
+    {
+      text: "We buy all IoT modules from Edge Electronix. Trustworthy and quick service.",
+      author: "DroneWorks Startup",
+      rating: 5
+    }
+  ];
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: rating }, (_, i) => (
+      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+    ));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       <WhatsAppFloat />
+      <FloatingActionButtons />
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-20 px-4">
@@ -46,8 +101,8 @@ const Index = () => {
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
             Edge <span className="text-green-400">Electronix</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto animate-fade-in">
-            Surat's Leading Wholesale Supplier of Electronic Components, Sensors & IoT Solutions
+          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-4xl mx-auto animate-fade-in">
+            Surat's #1 Source for Wholesale Electronic Components, Sensors & IoT Hardware
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Link to="/products">
@@ -56,7 +111,7 @@ const Index = () => {
               </Button>
             </Link>
             <Link to="/quote">
-              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300">
+              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 bg-transparent">
                 Request Quote
               </Button>
             </Link>
@@ -80,6 +135,50 @@ const Index = () => {
                   <div className="text-4xl mb-4">{item.icon}</div>
                   <h3 className="font-bold text-lg mb-2 text-gray-800">{item.title}</h3>
                   <p className="text-gray-600">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Top Categories Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Top Categories</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {topCategories.map((category, index) => (
+              <Link key={index} to="/products" className="group">
+                <Card className="text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${category.gradient} mb-4 text-white group-hover:scale-110 transition-transform duration-300`}>
+                      {category.icon}
+                    </div>
+                    <h3 className="font-semibold text-sm text-gray-800">{category.title}</h3>
+                    {category.description && (
+                      <p className="text-xs text-gray-600 mt-1">{category.description}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Testimonials */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">What Our Customers Say</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-8 text-center">
+                  <div className="flex justify-center mb-4">
+                    {renderStars(testimonial.rating)}
+                  </div>
+                  <p className="text-gray-700 text-lg mb-4 italic">"{testimonial.text}"</p>
+                  <p className="font-semibold text-gray-800">— {testimonial.author}</p>
                 </CardContent>
               </Card>
             ))}
